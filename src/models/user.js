@@ -50,6 +50,8 @@ module.exports = function (sequelize, Sequelize) {
 
     });
 
+    User.associate = () => null;
+    
     return User;
 
 }

@@ -1,17 +1,18 @@
 import Sequelize from 'sequelize';
 import path from 'path';
 import fs from 'fs';
-import config from './config';
- 
+import config from '../../utils/config';
+
 let database = null;
 
+const databaseConfiguration = config.database[process.env.NODE_ENV];
+
 if (!database) {
-    
     const _sequelize = new Sequelize(
-        config.development.database,
-        config.development.username,
-        config.development.password,
-        config.development
+        databaseConfiguration.database,
+        databaseConfiguration.username,
+        databaseConfiguration.password,
+        databaseConfiguration
     );
 
     database = {
@@ -29,9 +30,9 @@ if (!database) {
             database.models[model.name] = model;
         });
 
-    // Object.keys(database.models).forEach( key => {
-    //     database.models[key].associate(database.models);
-    // });
+    Object.keys(database.models).forEach( key => {
+        database.models[key].associate(database.models);
+    });
 
 }
 
