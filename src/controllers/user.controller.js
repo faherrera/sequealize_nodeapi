@@ -21,6 +21,18 @@ class UserController {
             message:'Esto e slo que tengo',
         });
     }
+
+    async Create(req,res){
+        const user = req.body;
+        const storedData = await _userService.Store(user);
+        res.status(200)
+        .json(
+            {
+                data:storedData,
+                message:"Datos"
+            }
+        );
+    }
 }
 
 export default UserController;

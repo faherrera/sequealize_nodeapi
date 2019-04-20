@@ -8,11 +8,9 @@ const User = (sequelize, DataType) => sequelize.define('user', {
     },
     firstname: {
         type: DataType.STRING,
-        notEmpty: true
     },
     lastname: {
         type: DataType.STRING,
-        notEmpty: true
     },
     username: {
         type: DataType.TEXT
@@ -28,7 +26,6 @@ const User = (sequelize, DataType) => sequelize.define('user', {
     },
     password: {
         type: DataType.STRING,
-        allowNull: false
     },
     last_login: {
         type: DataType.DATE
