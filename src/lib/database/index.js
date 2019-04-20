@@ -1,39 +1,25 @@
 import Sequelize from 'sequelize';
-import path from 'path';
-import fs from 'fs';
 import config from '../../utils/config';
-
-let database = null;
+import UserModel from '../../models/user';
+import TaskModel from '../../models/task';
 
 const databaseConfiguration = config.database[process.env.NODE_ENV];
 
-if (!database) {
-    const _sequelize = new Sequelize(
-        databaseConfiguration.database,
-        databaseConfiguration.username,
-        databaseConfiguration.password,
-        databaseConfiguration
-    );
+const sequelize = new Sequelize(
+    databaseConfiguration.database,
+    databaseConfiguration.username,
+    databaseConfiguration.password,
+    databaseConfiguration
+);
 
-    database = {
-        _sequelize,
-        Sequelize,
-        models:{}
-    };
+const User = UserModel(sequelize, Sequelize)
+const Task = TaskModel(sequelize, Sequelize)
 
-    const dirName = path.join(__dirname, '..', '..','models');
+Task.belongsTo(User);
 
-    fs.readdirSync(dirName).forEach(
-        filename => {
-            const modelDir = path.join(dirName,filename);
-            const model = _sequelize.import(modelDir);
-            database.models[model.name] = model;
-        });
+sequelize.sync({force:false});
 
-    Object.keys(database.models).forEach( key => {
-        database.models[key].associate(database.models);
-    });
-
+export {
+    User,
+    Task
 }
-
-export default database;

@@ -1,10 +1,10 @@
 import expressLoader from './express';
-import sequealizeLoader from './sequelize';
+import routesLoader from './routes';
 
 async function loaderModule(app){
 
     await expressLoader(app);
-    await sequealizeLoader(app);
+    await routesLoader(app);
 
 }
 
