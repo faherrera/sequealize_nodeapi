@@ -1,5 +1,5 @@
 class CategoryService {
-    constructor();
+    constructor(){};
 
 
 }
